@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Calculateur de prix</title>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    background: #fff;
+    color: #000;
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+    gap: 40px;
+    min-height: 100vh;
+  }
+  .section {
+    background: #f9f9f9;
+    border: 2px solid #000;
+    border-radius: 8px;
+    padding: 20px;
+    width: 350px;
+    box-sizing: border-box;
+  }
+  h2 {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  label {
+    display: block;
+    margin: 10px 0 5px;
+    font-weight: bold;
+  }
+  select,
+  input[type="text"],
+  input[type="email"],
+  input[type="tel"],
+  textarea {
+    width: 100%;
+    padding: 6px;
+    border: 1px solid #000;
+    border-radius: 4px;
+    font-size: 14px;
+  }
+  textarea {
+    resize: vertical;
+  }
+  .button-row {
+    margin-top: 20px;
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+  }
+  .button-row button {
+    flex: 1;
+    padding: 10px 0;
+    font-size: 16px;
+    font-weight: bold;
+    background: #000;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  .button-row button:hover {
+    background: #444;
+  }
+  .result {
+    margin-top: 15px;
+    background: #eee;
+    padding: 10px;
+    border-radius: 5px;
+    font-weight: bold;
+    min-height: 80px;
+  }
+  /* For smaller screens, stack columns */
+  @media (max-width: 800px) {
+    body {
+      flex-direction: column;
+      align-items: center;
+    }
+    .section {
+      width: 90%;
+      max-width: 500px;
+    }
+  }
+</style>
+</head>
+<body>
+
+<div class="section" id="calculateur">
+  <h2>Calculateur de prix</h2>
+
+  <label for="sdb">Salle de bain :</label>
+  <select id="sdb">
+    <option value="0">0</option>
+    <option value="1">1</option>
+    <option value="2">2</option>
+    <option value="3">3</option>
+    <option value="4">4</option>
+    <option value="5">5</option>
+    <option value="6">6</option>
+    <option value="7">7</option>
+    <option value="8">8</option>
+    <option value="9">9</option>
+    <option value="10">10</option>
+  </select>
+
+  <label for="sde">Salle d'eau :</label>
+  <select id="sde">
+    <option value="0">0</option>
+    <option value="1">1</option>
+    <option value="2">2</option>
+    <option value="3">3</option>
+    <option value="4">4</option>
+    <option value="5">5</option>
+    <option value="6">6</option>
+    <option value="7">7</option>
+    <option value="8">8</option>
+    <option value="9">9</option>
+    <option value="10">10</option>
+  </select>
+
+  <label for="ao">Aire ouverte :</label>
+  <select id="ao">
+    <option value="0">0</option>
+    <option value="1">1</option>
+    <option value="2">2</option>
+    <option value="3">3</option>
+    <option value="4">4</option>
+    <option value="5">5</option>
+    <option value="6">6</option>
+    <option value="7">7</option>
+    <option value="8">8</option>
+    <option value="9">9</option>
+    <option value="10">10</option>
+  </select>
+
+  <label for="cuisine">Cuisine :</label>
+  <select id="cuisine">
+    <option value="0">0</option>
+    <option value="1">1</option>
+    <option value="2">2</option>
+    <option value="3">3</option>
+    <option value="4">4</option>
+    <option value="5">5</option>
+    <option value="6">6</option>
+    <option value="7">7</option>
+    <option value="8">8</option>
+    <option value="9">9</option>
+    <option value="10">10</option>
+  </select>
+
+  <label for="chambre">Chambre :</label>
+  <select id="chambre">
+    <option value="0">0</option>
+    <option value="1">1</option>
+    <option value="2">2</option>
+    <option value="3">3</option>
+    <option value="4">4</option>
+    <option value="5">5</option>
+    <option value="6">6</option>
+    <option value="7">7</option>
+    <option value="8">8</option>
+    <option value="9">9</option>
+    <option value="10">10</option>
+  </select>
+
+  <label for="escalier">Escalier :</label>
+  <select id="escalier">
+    <option value="0">0</option>
+    <option value="1">1</option>
+    <option value="2">2</option>
+    <option value="3">3</option>
+    <option value="4">4</option>
+    <option value="5">5</option>
+    <option value="6">6</option>
+    <option value="7">7</option>
+    <option value="8">8</option>
+    <option value="9">9</option>
+    <option value="10">10</option>
+  </select>
+
+  <div class="button-row" style="margin-top: 10px;">
+    <button onclick="calculer()">Calculer</button>
+    <button onclick="resetCalculateur()">Reset</button>
+  </div>
+
+  <div class="result" id="resultat"></div>
+</div>
+
+<div class="section" id="formulaire">
+  <h2>Informations du client</h2>
+
+  <label for="prenom">Prénom :</label>
+  <input type="text" id="prenom" />
+
+  <label for="nom">Nom :</label>
+  <input type="text" id="nom" />
+
+  <label for="email">Courriel :</label>
+  <input type="email" id="email" />
+
+  <label for="adresse">Adresse :</label>
+  <input type="text" id="adresse" />
+
+  <label for="telephone">Téléphone :</label>
+  <input type="tel" id="telephone" />
+
+  <label for="notes">Notes :</label>
+  <textarea id="notes" rows="5"></textarea>
+
+  <div class="button-row" style="margin-top: 10px;">
+    <button onclick="enregistrerPDF()">Enregistrer en PDF</button>
+  </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script>
+  const prix = {
+    sdb: 260,
+    sde: 100,
+    ao: 100,
+    cuisine: 260,
+    chambre: 50,
+    escalier: 50,
+  };
+
+  function calculer() {
+    const sdb = Number(document.getElementById("sdb").value);
+    const sde = Number(document.getElementById("sde").value);
+    const ao = Number(document.getElementById("ao").value);
+    const cuisine = Number(document.getElementById("cuisine").value);
+    const chambre = Number(document.getElementById("chambre").value);
+    const escalier = Number(document.getElementById("escalier").value);
+
+    if (
+      [sdb, sde, ao, cuisine, chambre, escalier].some(
+        (v) => v < 0 || v > 10 || isNaN(v)
+      )
+    ) {
+      alert("Veuillez entrer un nombre entre 0 et 10 pour chaque élément.");
+      return;
+    }
+
+    const sousTotal =
+      sdb * prix.sdb +
+      sde * prix.sde +
+      ao * prix.ao +
+      cuisine * prix.cuisine +
+      chambre * prix.chambre +
+      escalier * prix.escalier;
+
+    const tps = sousTotal * 0.05;
+    const tvq = sousTotal * 0.09975;
+    const total = sousTotal + tps + tvq;
+
+    document.getElementById("resultat").innerHTML = `
+      Sous-total : ${sousTotal.toFixed(2)} $<br />
+      TPS (5%) : ${tps.toFixed(2)} $<br />
+      TVQ (9.975%) : ${tvq.toFixed(2)} $<br />
+      <strong>Total : ${total.toFixed(2)} $</strong>
+    `;
+  }
+
+  function resetCalculateur() {
+    ["sdb", "sde", "ao", "cuisine", "chambre", "escalier"].forEach((id) => {
+      document.getElementById(id).value = "0";
+    });
+    document.getElementById("resultat").innerHTML = "";
+  }
+
+  async function enregistrerPDF() {
+    const { jsPDF } = window.jspdf;
+    const pdf = new jsPDF({
+      unit: "pt",
+      format: "a4",
+    });
+
+    const calculateurCanvas = await html2canvas(
+      document.getElementById("calculateur"),
+      { scale: 2 }
+    );
+    const formulaireCanvas = await html2canvas(
+      document.getElementById("formulaire"),
+      { scale: 2 }
+    );
+
+    const calculateurImgData = calculateurCanvas.toDataURL("image/png");
+    const formulaireImgData = formulaireCanvas.toDataURL("image/png");
+
+    const pageWidth = pdf.internal.pageSize.getWidth();
+    const margin = 20;
+    const imgWidth = (pageWidth - 3 * margin) / 2;
+
+    const calcRatio = calculateurCanvas.height / calculateurCanvas.width;
+    const formRatio = formulaireCanvas.height / formulaireCanvas.width;
+
+    const calcHeight = imgWidth * calcRatio;
+    const formHeight = imgWidth * formRatio;
+
+    pdf.addImage(calculateurImgData, "PNG", margin, margin, imgWidth, calcHeight);
+    pdf.addImage(
+      formulaireImgData,
+      "PNG",
+      margin * 2 + imgWidth,
+      margin,
+      imgWidth,
+      formHeight
+    );
+
+    pdf.save("soumission.pdf");
+  }
+</script>
+
+</body>
+</html>
